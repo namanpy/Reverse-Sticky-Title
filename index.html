@@ -1,0 +1,175 @@
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <script  src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+</head>
+
+
+<body>
+
+    
+    <div class="container" id="container-1">
+
+        <div>
+            <div class="title" id="title-1">
+                <h1>The Club House</h1>
+            </div>
+            <div class="foreground-image">
+                <img id="trigger" src="assets/building.png">
+
+                <div class="title-clone" id="title-2">
+                    <h1>The Club House</h1>
+                </div>
+            </div>
+
+  
+            
+        </div>
+    </div>
+    <div>
+        <p>
+                        This is awesome. I have wondered for so long how to do this. I had tried it with top: 0; and left: 0;, but it seems that the addition of bottom: 0; and right: 0; make the difference. Thank you. – user981178 Jan 11 '13 at 3:45
+                    112
+                    This solution only works if your element has a fixed height. See tombul's answer for two solutions that do not change the element's natural height. – Stuart P. Bentley Oct 8 '13 at 21:50 
+                    4
+                    Doesn't work with dynamic content – user2889419 Sep 6 '14 at 23:04
+                    3
+                    @FlashThunder you suggest tables for non-table data, aren't you? – Vladimir Starkov Jan 10 '15 at 3:17
+                    2
+                    Excellent! I did not even know bottom: and right: existed in css... – Louis van Tonder Jun 14 '17 at 10:29
+                    Show 9 more comments
+
+                    145
+
+                    Even though this did not work when the OP asked this question, I think, for modern browsers at least, the best solution is to use display: flex or pseudo classes.
+
+                    You can see an example in the following fiddle. Here is the updated fiddle.
+
+                    For pseudo classes an example could be:
+
+                    .centerPseudo {
+                    display:inline-block;
+                    text-align:center;
+                    }
+
+                    .centerPseudo::before{
+                    content:'';
+                    display:inline-block;
+                    height:100%;
+                    vertical-align:middle;
+                    width:0px;
+                    }
+                    The usage of display: flex, according to css-tricks and MDN is as follows:
+
+                    .centerFlex {
+                    align-items: center;
+                    display: flex;
+                    justify-content: center;
+                    }
+                    There are other attributes available for flex, which are explained in above mentioned links, with further examples.
+
+                    If you have to support older browsers, which don't support css3, then you should probably use javascript or the fixed width/height solution shown in the other answers.
+
+                    Share
+                    Improve this answer
+                    Follow
+                    edited Jun 10 '15 at 14:10
+                    answered Sep 4 '13 at 15:43
+
+                    tombul
+                    1,59611 gold badge1111 silver badges1111 bronze badges
+                    10
+                    All browsers from 2012–2013 upwards support flex boxes. From today’s standpoint it should be safe enough to use it for new applications under most circumstances. The only situation I can think of where the older model should be preferred are business customers who rely on older infrastructure and can’t upgrade. – Rafael Bugajewski Aug 23 '15 at 15:56
+                    Add a comment
+
+                    104
+
+                    Simplicity of this technique is stunning:
+                    (This method has its implications though, but if you only need to center element regardless of flow of the rest of the content, it's just fine. Use with care)
+
+                    Markup:
+
+                    <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum accumsan tellus purus, et mollis nulla consectetur ac. Quisque id elit at diam convallis venenatis eget sed justo. Nunc egestas enim mauris, sit amet tempor risus ultricies in. Sed dignissim magna erat, vel laoreet tortor bibendum vitae. Ut porttitor tincidunt est imperdiet vestibulum. Vivamus id nibh tellus. Integer massa orci, gravida non imperdiet sed, consectetur ac quam. Nunc dignissim felis id tortor tincidunt, a eleifend nulla molestie. Phasellus eleifend leo purus, vel facilisis massa dignissim vitae. Pellentesque libero sapien, tincidunt ut lorem non, porta accumsan risus. Morbi tempus pharetra ex, vel luctus turpis tempus eu. Integer vitae sagittis massa, id gravida erat. Maecenas sed purus et magna tincidunt faucibus nec eget erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc nec mollis sem.</div>
+                    And CSS:
+
+                    div {
+                    color: white;
+                    background: red;
+                    padding: 15px;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    -ms-transform: translateX(-50%) translateY(-50%);
+                    -webkit-transform: translate(-50%,-50%);
+                    transform: translate(-50%,-50%);
+                    }   
+                    This will center element horizontally and vertically too. No negative margins, just power of transforms. Also we should already forget about IE8 shouldn't we?
+
+                    Share
+                    Improve this answer
+                    Follow
+                    edited Jun 23 '19 at 10:56
+
+                    Brian Burns
+                    14.4k55 gold badges6767 silver badges5959 bronze badges
+                    answered Jan 16 '15 at 16:03
+
+                    robjez
+                    3,49433 gold badges2828 silver badges3434 bronze badges
+                    8
+                    Yes, I used a lot this method... but, problem come if element is much higher then screen height (where height is unknown) ... top of centered element would be cut. Even if element is putted in parent element where overflow is set to auto or scroll. Same problem using flex. Unfortunately, like last resort I use table to override this problem. Only when centered element will be much, much higher (dynamically populated). – nelek Oct 27 '15 at 6:59 
+                    I had to set position to relative, probably because my div floats right. – Souradeep Nanda Feb 28 '16 at 3:22
+                    Nelek - if parent element has fixed width and height you can add max-width:100% and max-height:100% to the image and prevent it from expanding the parent – jan199674 Jan 9 '17 at 0:16
+                    Please check it in box model. its not coming on center. its showing as center but its exact pixel values are not there. – Sarbasish Mishra Sep 2 '20 at 6:52
+                    Yes, I used a lot this method... but, problem come if element is much higher then screen height (where height is unknown) ... top of centered element would be cut. Even if element is putted in parent element where overflow is set to auto or scroll. Same problem using flex. Unfortunately, like last resort I use table to override this problem. Only when centered element will be much, much higher (dynamically populated). – nelek Oct 27 '15 at 6:59 
+                    I had to set position to relative, probably because my div floats right. – Souradeep Nanda Feb 28 '16 at 3:22
+                    Nelek - if parent element has fixed width and height you can add max-width:100% and max-height:100% to the image and prevent it from expanding the parent – jan199674 Jan 9 '17 at 0:16
+                    Please check it in box model. its not coming                    Yes, I used a lot this method... but, problem come if element is much higher then screen height (where height is unknown) ... top of centered element would be cut. Even if element is putted in parent element where overflow is set to auto or scroll. Same problem using flex. Unfortunately, like last resort I use table to override this problem. Only when centered element will be much, much higher (dynamically populated). – nelek Oct 27 '15 at 6:59 
+                    I had to set position to relative, probably because my div floats right. – Souradeep Nanda Feb 28 '16 at 3:22
+                    Nelek - if parent element has fixed width and height you can add max-width:100% and max-height:100% to the image and prevent it from expanding the parent – jan199674 Jan 9 '17 at 0:16
+                    Please check it in box model. its not coming                    Yes, I used a lot this method... but, problem come if element is much higher then screen height (where height is unknown) ... top of centered element would be cut. Even if element is putted in parent element where overflow is set to auto or scroll. Same problem using flex. Unfortunately, like last resort I use table to override this problem. Only when centered element will be much, much higher (dynamically populated). – nelek Oct 27 '15 at 6:59 
+                    I had to set position to relative, probably because my div floats right. – Souradeep Nanda Feb 28 '16 at 3:22
+                    Nelek - if parent element has fixed width and height you can add max-width:100% and max-height:100% to the image and prevent it from expanding the parent – jan199674 Jan 9 '17 at 0:16
+                    Please check it in box model. its not coming                    Yes, I used a lot this method... but, problem come if element is much higher then screen height (where height is unknown) ... top of centered element would be cut. Even if element is putted in parent element where overflow is set to auto or scroll. Same problem using flex. Unfortunately, like last resort I use table to override this problem. Only when centered element will be much, much higher (dynamically populated). – nelek Oct 27 '15 at 6:59 
+                    I had to set position to relative, probably because my div floats right. – Souradeep Nanda Feb 28 '16 at 3:22
+                    Nelek - if parent element has fixed width and height you can add max-width:100% and max-height:100% to the image and prevent it from expanding the parent – jan199674 Jan 9 '17 at 0:16
+                    Please check it in box model. its not coming                    Yes, I used a lot this method... but, problem come if element is much higher then screen height (where height is unknown) ... top of centered element would be cut. Even if element is putted in parent element where overflow is set to auto or scroll. Same problem using flex. Unfortunately, like last resort I use table to override this problem. Only when centered element will be much, much higher (dynamically populated). – nelek Oct 27 '15 at 6:59 
+                    I had to set position to relative, probably because my div floats right. – Souradeep Nanda Feb 28 '16 at 3:22
+                    Nelek - if parent element has fixed width and height you can add max-width:100% and max-height:100% to the image and prevent it from expanding the parent – jan199674 Jan 9 '17 at 0:16
+                    Please check it in box model. its not coming                    Yes, I used a lot this method... but, problem come if element is much higher then screen height (where height is unknown) ... top of centered element would be cut. Even if element is putted in parent element where overflow is set to auto or scroll. Same problem using flex. Unfortunately, like last resort I use table to override this problem. Only when centered element will be much, much higher (dynamically populated). – nelek Oct 27 '15 at 6:59 
+                    I had to set position to relative, probably because my div floats right. – Souradeep Nanda Feb 28 '16 at 3:22
+                    Nelek - if parent element has fixed width and height you can add max-width:100% and max-height:100% to the image and prevent it from expanding the parent – jan199674 Jan 9 '17 at 0:16
+                    Please check it in box model. its not coming                    Yes, I used a lot this method... but, problem come if element is much higher then screen height (where height is unknown) ... top of centered element would be cut. Even if element is putted in parent element where overflow is set to auto or scroll. Same problem using flex. Unfortunately, like last resort I use table to override this problem. Only when centered element will be much, much higher (dynamically populated). – nelek Oct 27 '15 at 6:59 
+                    I had to set position to relative, probably because my div floats right. – Souradeep Nanda Feb 28 '16 at 3:22
+                    Nelek - if parent element has fixed width and height you can add max-width:100% and max-height:100% to the image and prevent it from expanding the parent – jan199674 Jan 9 '17 at 0:16
+                    Please check it in box model. its not coming                    Yes, I used a lot this method... but, problem come if element is much higher then screen height (where height is unknown) ... top of centered element would be cut. Even if element is putted in parent element where overflow is set to auto or scroll. Same problem using flex. Unfortunately, like last resort I use table to override this problem. Only when centered element will be much, much higher (dynamically populated). – nelek Oct 27 '15 at 6:59 
+                    I had to set position to relative, probably because my div floats right. – Souradeep Nanda Feb 28 '16 at 3:22
+                    Nelek - if parent element has fixed width and height you can add max-width:100% and max-height:100% to the image and prevent it from expanding the parent – jan199674 Jan 9 '17 at 0:16
+                    Please check it in box model. its not coming                    Yes, I used a lot this method... but, problem come if element is much higher then screen height (where height is unknown) ... top of centered element would be cut. Even if element is putted in parent element where overflow is set to auto or scroll. Same problem using flex. Unfortunately, like last resort I use table to override this problem. Only when centered element will be much, much higher (dynamically populated). – nelek Oct 27 '15 at 6:59 
+                    I had to set position to relative, probably because my div floats right. – Souradeep Nanda Feb 28 '16 at 3:22
+                    Nelek - if parent element has fixed width and height you can add max-width:100% and max-height:100% to the image and prevent it from expanding the parent – jan199674 Jan 9 '17 at 0:16
+                    Please check it in box model. its not coming
+       
+                </p>
+    </div>
+
+
+</body>
+<script>
+    $( window ).scroll(function() {
+        if ($(this).scrollTop() <= $("#title-2").offset().top - ($("#title-2").outerHeight() /2) - $("#title-1").offset().top +$(this).scrollTop() ) { 
+            $(".title" ).css( "z-index", -1);
+            $(".title-clone" ).css( "visibility", "hidden");
+            $(".title" ).css( "visibility", "visible");
+        } else {
+            $(".title" ).css( "z-index", 1);
+            $(".title" ).css( "visibility", "hidden");
+            $(".title-clone" ).css( "visibility", "visible");
+
+        }
+        console.log( $(this).scrollTop() , $("#title-2").offset().top - $("#title-2").height() - $("#title-1").offset().top +$(this).scrollTop());
+
+        });
+</script>
+
+</html>

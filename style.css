@@ -1,0 +1,37 @@
+* {
+
+    background-color : linear-gradient(180deg, red, orange);
+}
+.container {
+    display : flex;
+    position: relative;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin: none;
+}
+.title {
+
+    position: fixed;
+    top : 10%;
+    left : 50%;
+    width: 100%;
+    font-size: 70px;
+    transform: translateX(-50%);
+    z-index: -1;
+    word-wrap: break-word;
+    text-align: center;
+
+}
+.title-clone {
+
+    font-size: 70px;
+    word-wrap: break-word;
+    text-align: center;
+
+}
+
+.foreground-image {
+
+    z-index: 1;
+}
